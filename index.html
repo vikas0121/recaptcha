@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
+    <div class="conatiner">
+        <form id="subscribeForm">
+            <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="6LeOLDIUAAAAAPYj19UjZUxXDbXo1_rDY4HDT_pH"></div>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('subscribeForm').addEventListener('submit', submitForm);
+        function submitForm(e){           
+            e.preventDefault();
+            console.log(123);
+            const captcha = document.querySelector('#g-recaptcha-response').value;
+
+            fetch('/subscribe', {
+                method: 'POST',
+                headers:{
+                    'Accept':'application/json, text/plain, */*',
+                    'Content-type':'application/json'
+                },
+                body:JSON.stringify({captcha:captcha})
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            });
+        }
+    </script>
+</body>
+</html>
